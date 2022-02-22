@@ -116,6 +116,9 @@ pub use self::filters::multipart;
 #[cfg(feature = "websocket")]
 #[doc(hidden)]
 pub use self::filters::ws;
+#[cfg(feature = "fs")]
+#[doc(hidden)]
+pub use self::filters::fs;
 #[doc(hidden)]
 pub use self::filters::{
     addr,
@@ -129,7 +132,6 @@ pub use self::filters::{
     // cors() function
     cors::cors,
     ext,
-    fs,
     header,
     // header() function
     header::header,

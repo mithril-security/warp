@@ -11,6 +11,7 @@ pub mod compression;
 pub mod cookie;
 pub mod cors;
 pub mod ext;
+#[cfg(feature = "fs")]
 pub mod fs;
 pub mod header;
 pub mod host;

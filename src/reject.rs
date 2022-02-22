@@ -285,7 +285,9 @@ enum_known! {
     LengthRequired(LengthRequired),
     PayloadTooLarge(PayloadTooLarge),
     UnsupportedMediaType(UnsupportedMediaType),
+    #[cfg(feature = "fs")]
     FileOpenError(crate::fs::FileOpenError),
+    #[cfg(feature = "fs")]
     FilePermissionError(crate::fs::FilePermissionError),
     BodyReadError(crate::body::BodyReadError),
     BodyDeserializeError(crate::body::BodyDeserializeError),
@@ -435,8 +437,11 @@ impl Rejections {
                 Known::LengthRequired(_) => StatusCode::LENGTH_REQUIRED,
                 Known::PayloadTooLarge(_) => StatusCode::PAYLOAD_TOO_LARGE,
                 Known::UnsupportedMediaType(_) => StatusCode::UNSUPPORTED_MEDIA_TYPE,
-                Known::FilePermissionError(_) | Known::CorsForbidden(_) => StatusCode::FORBIDDEN,
-                Known::FileOpenError(_)
+                #[cfg(feature = "fs")]
+                Known::FilePermissionError(_) => StatusCode::FORBIDDEN,
+                Known::CorsForbidden(_) => StatusCode::FORBIDDEN,
+                #[cfg(feature = "fs")]
+                Known::FileOpenError(_) => StatusCode::INTERNAL_SERVER_ERROR,
                 | Known::MissingExtension(_)
                 | Known::BodyConsumedMultipleTimes(_) => StatusCode::INTERNAL_SERVER_ERROR,
             },

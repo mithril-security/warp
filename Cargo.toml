@@ -32,7 +32,7 @@ scoped-tls = "1.0"
 serde = "1.0"
 serde_json = "1.0"
 serde_urlencoded = "0.7"
-tokio = { version = "1.0", features = ["fs", "sync", "time"] }
+tokio = { version = "1.0", features = ["sync", "time"] }
 tokio-stream = "0.1.1"
 tokio-util = { version = "0.6", features = ["io"] }
 tracing = { version = "0.1.21", default-features = false, features = ["log", "std"] }
@@ -61,6 +61,7 @@ tls = ["tokio-rustls"]
 compression = ["compression-brotli", "compression-gzip"]
 compression-brotli = ["async-compression/brotli"]
 compression-gzip = ["async-compression/deflate", "async-compression/gzip"]
+fs = ["tokio/fs"]
 
 [profile.release]
 codegen-units = 1

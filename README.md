@@ -6,6 +6,10 @@
 [![GHA Build Status](https://github.com/seanmonstar/warp/workflows/CI/badge.svg)](https://github.com/seanmonstar/warp/actions?query=workflow%3ACI)
 [![Discord chat][discord-badge]][discord-url]
 
+## SGX Related
+
+This port disables the `tokio/fs` feature by default because it is incompatible with SGX. On non-SGX environment you can enable it back by using the added `fs` feature on this crate.
+
 A super-easy, composable, web server framework for warp speeds.
 
 The fundamental building block of `warp` is the `Filter`: they can be combined
