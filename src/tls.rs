@@ -1,4 +1,5 @@
 use std::fmt;
+#[cfg(feature = "fs")]
 use std::fs::File;
 use std::future::Future;
 use std::io::{self, BufReader, Cursor, Read};
@@ -86,6 +87,7 @@ impl TlsConfigBuilder {
     }
 
     /// sets the Tls key via File Path, returns `TlsConfigError::IoError` if the file cannot be open
+    #[cfg(feature = "fs")]
     pub(crate) fn key_path(mut self, path: impl AsRef<Path>) -> Self {
         self.key = Box::new(LazyFile {
             path: path.as_ref().into(),
@@ -101,6 +103,7 @@ impl TlsConfigBuilder {
     }
 
     /// Specify the file path for the TLS certificate to use.
+    #[cfg(feature = "fs")]
     pub(crate) fn cert_path(mut self, path: impl AsRef<Path>) -> Self {
         self.cert = Box::new(LazyFile {
             path: path.as_ref().into(),
@@ -119,6 +122,7 @@ impl TlsConfigBuilder {
     ///
     /// Anonymous and authenticated clients will be accepted. If no trust anchor is provided by any
     /// of the `client_auth_` methods, then client authentication is disabled by default.
+    #[cfg(feature = "fs")]
     pub(crate) fn client_auth_optional_path(mut self, path: impl AsRef<Path>) -> Self {
         let file = Box::new(LazyFile {
             path: path.as_ref().into(),
@@ -142,6 +146,7 @@ impl TlsConfigBuilder {
     ///
     /// Only authenticated clients will be accepted. If no trust anchor is provided by any of the
     /// `client_auth_` methods, then client authentication is disabled by default.
+    #[cfg(feature = "fs")]
     pub(crate) fn client_auth_required_path(mut self, path: impl AsRef<Path>) -> Self {
         let file = Box::new(LazyFile {
             path: path.as_ref().into(),
@@ -235,11 +240,13 @@ impl TlsConfigBuilder {
     }
 }
 
+#[cfg(feature = "fs")]
 struct LazyFile {
     path: PathBuf,
     file: Option<File>,
 }
 
+#[cfg(feature = "fs")]
 impl LazyFile {
     fn lazy_read(&mut self, buf: &mut [u8]) -> io::Result<usize> {
         if self.file.is_none() {
@@ -250,6 +257,7 @@ impl LazyFile {
     }
 }
 
+#[cfg(feature = "fs")]
 impl Read for LazyFile {
     fn read(&mut self, buf: &mut [u8]) -> io::Result<usize> {
         self.lazy_read(buf).map_err(|err| {

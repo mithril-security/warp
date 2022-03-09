@@ -418,6 +418,7 @@ where
     /// Specify the file path to read the private key.
     ///
     /// *This function requires the `"tls"` feature.*
+    #[cfg(feature = "fs")]
     pub fn key_path(self, path: impl AsRef<Path>) -> Self {
         self.with_tls(|tls| tls.key_path(path))
     }
@@ -425,6 +426,7 @@ where
     /// Specify the file path to read the certificate.
     ///
     /// *This function requires the `"tls"` feature.*
+    #[cfg(feature = "fs")]
     pub fn cert_path(self, path: impl AsRef<Path>) -> Self {
         self.with_tls(|tls| tls.cert_path(path))
     }
@@ -435,6 +437,7 @@ where
     /// of the `client_auth_` methods, then client authentication is disabled by default.
     ///
     /// *This function requires the `"tls"` feature.*
+    #[cfg(feature = "fs")]
     pub fn client_auth_optional_path(self, path: impl AsRef<Path>) -> Self {
         self.with_tls(|tls| tls.client_auth_optional_path(path))
     }
@@ -445,6 +448,7 @@ where
     /// `client_auth_` methods, then client authentication is disabled by default.
     ///
     /// *This function requires the `"tls"` feature.*
+    #[cfg(feature = "fs")]
     pub fn client_auth_required_path(self, path: impl AsRef<Path>) -> Self {
         self.with_tls(|tls| tls.client_auth_required_path(path))
     }
